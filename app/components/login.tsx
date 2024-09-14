@@ -50,7 +50,7 @@ export default function LoginComponent() {
           <ThemedText type="subtitle">Paso 3: Ingresa!</ThemedText>
           <Button
             onPress={() => {
-              fetch(`http://ec2-54-235-50-246.compute-1.amazonaws.com:8080/login`, {
+              fetch(`http://ec2-54-164-66-106.compute-1.amazonaws.com:8080/login`, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',

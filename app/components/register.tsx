@@ -62,7 +62,7 @@ export default function RegisterComponent() {
                 alert("Contraseña y confirmar contraseña no coinciden")
                 return;
               }
-              fetch(`http://ec2-54-235-50-246.compute-1.amazonaws.com:8080/signup`, {
+              fetch(`http://ec2-54-164-66-106.compute-1.amazonaws.com:8080/signup`, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
