@@ -6,6 +6,7 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import LoginComponent from '../components/login';
 import RegisterComponent from '../components/register';
+import { BotonPress } from '@/components/TouchableOpacity';
 
 export default function HomeScreen() {
   return (
@@ -16,8 +17,10 @@ export default function HomeScreen() {
           source={require('@/assets/images/HeroBG.png')}
           style={styles.reactLogo}
         />
+        
       }>
         <RegisterComponent/>
+       
     </ParallaxScrollView>
   );
 }
@@ -37,6 +40,6 @@ const styles = StyleSheet.create({
     width: 290,
     bottom: 0,
     left: 0,
-    position: 'absolute',
+    position: 'static',
   },
 });

@@ -11,6 +11,7 @@ import { ThemedView } from '@/components/ThemedView';
 import { HelloWave } from '@/components/HelloWave';
 import { ThemedText } from '@/components/ThemedText';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {BotonPress} from '@/components/TouchableOpacity';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -36,14 +37,20 @@ export default function LoginComponent() {
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <View>
+
+          
         <ThemedView style={styles.titleContainer}>
             <ThemedText type="title">Iniciar sesión!</ThemedText>
             <HelloWave />
         </ThemedView>
+        
+
         <ThemedView style={styles.stepContainer}>
           <ThemedText type="subtitle">Paso 1: Ingresa tu email</ThemedText>
           <TextInput placeholder='Ingrese su email' onChangeText={setEmail}>
           </TextInput>
+             
+         
           <ThemedText type="subtitle">Paso 2: Ingresa tu clave</ThemedText>
           <TextInput secureTextEntry={true} placeholder='Ingrese su contraseña' onChangeText={setPassword}>
           </TextInput>
