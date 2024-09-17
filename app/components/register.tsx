@@ -154,50 +154,95 @@ export default function RegisterComponent() {
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <View>
         <ThemedView style={styles.titleContainer}>
-            <ThemedText type="title">Regístrese aquí!</ThemedText>
-            <HelloWave />
+          <ThemedText type="title">Regístrese aquí!</ThemedText>
+          <HelloWave />
         </ThemedView>
         <ThemedView style={styles.stepContainer}>
-           
-          <Button onPress={() => {
-              router.navigate("./components/registers/NameScreen")
-                }}
-          
-            title="Registrarse1"
-          />
-          
-     
-          
-          <Button onPress={() => {
+
+          <Pressable
+            onPress={() => router.navigate("./components/registers/NameScreen")}
+            style={[styles.roundedButton, styles.blueButton]} // Estilo para el botón azul
+            >
+            <Text style={styles.buttonText}>Registrarse</Text>
+          </Pressable>
+
+
+          <Pressable
+            onPress={() => router.navigate("./components/login")}
+            style={[styles.roundedButton, styles.redButton]} // Estilo para el botón verde
+            >
+            <Text style={styles.buttonText}>¿Tienes cuenta? Iniciar sesión</Text>
+          </Pressable>
+
+          {/* <Button onPress={() => {
             router.navigate("/components/login")
           }}
-          title='¿Tienes cuenta? Iniciar sesión'
-          color={"#1000BF"}
-          />
-          
-           
+            title='¿Tienes cuenta? Iniciar sesión'
+            color={"#1000BF"}
+          /> */}
+
+
         </ThemedView>
-    </View>
+      </View>
     </ThemeProvider>
   );
 }
 
+/* const styles = StyleSheet.create({
+  titleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  stepContainer: {
+    gap: 8,
+    marginBottom: 8,
+    marginTop: 90,  // Agregar margen superior para bajarlo
+  },
+  reactLogo: {
+    height: 178,
+    width: 290,
+    bottom: 0,
+    left: 0,
+    position: 'absolute',
+  },
+}); */
 const styles = StyleSheet.create({
-    titleContainer: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      gap: 8,
-    },
-    stepContainer: {
-      gap: 8,
-      marginBottom: 8,
-    },
-    reactLogo: {
-      height: 178,
-      width: 290,
-      bottom: 0,
-      left: 0,
-      position: 'absolute',
-    },
-  });
- 
+  roundedButton: {
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 25, // Esto hace que los bordes sean redondeados
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 20, // Para bajarlo más
+  },
+  blueButton: {
+    backgroundColor: '#1E90FF', // Azul
+  },
+  redButton: {
+    backgroundColor: '#D1001f', // Verde
+  },
+  buttonText: {
+    color: '#FFFFFF', // Color del texto
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  // Otros estilos
+  titleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  stepContainer: {
+    gap: 8,
+    marginBottom: 8,
+    marginTop: 90,  // Agregar margen superior para bajarlo
+  },
+  reactLogo: {
+    height: 178,
+    width: 290,
+    bottom: 0,
+    left: 0,
+    position: 'absolute',
+  },
+});
