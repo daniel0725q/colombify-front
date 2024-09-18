@@ -169,7 +169,7 @@ export default function RegisterComponent() {
 
           <Pressable
             onPress={() => router.navigate("./components/login")}
-            style={[styles.roundedButton, styles.redButton]} // Estilo para el botón verde
+            style={[styles.roundedButton, styles.redButton]} // Estilo para el botón rojo
             >
             <Text style={styles.buttonText}>¿Tienes cuenta? Iniciar sesión</Text>
           </Pressable>
@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#1E90FF', // Azul
   },
   redButton: {
-    backgroundColor: '#D1001f', // Verde
+    backgroundColor: '#D1001f', // Rojo
   },
   buttonText: {
     color: '#FFFFFF', // Color del texto
@@ -229,7 +229,6 @@ const styles = StyleSheet.create({
   },
   // Otros estilos
   titleContainer: {
-    flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
   },
@@ -237,6 +236,7 @@ const styles = StyleSheet.create({
     gap: 8,
     marginBottom: 8,
     marginTop: 90,  // Agregar margen superior para bajarlo
+    
   },
   reactLogo: {
     height: 178,
