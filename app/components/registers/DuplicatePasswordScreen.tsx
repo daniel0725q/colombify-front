@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import { View,Text, TextInput, Button, StyleSheet, Alert, Pressable } from 'react-native';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -19,7 +19,7 @@ export default function DuplicatePasswordScreen() {
       const storedName = await AsyncStorage.getItem('Name');
       const storedEmail = await AsyncStorage.getItem('Email');
       const storedPassword = await AsyncStorage.getItem('Password');
-      
+
       setName(storedName);
       setEmail(storedEmail);
       setPassword(storedPassword);
@@ -63,27 +63,63 @@ export default function DuplicatePasswordScreen() {
   return (
     <View style={styles.container}>
       <ThemedView style={styles.stepContainer}>
-      <ThemedText type="title">Paso 4: Confirma tu clave</ThemedText>
-          <TextInput secureTextEntry={true} placeholder='Confirme su contraseña' onChangeText={setPasswordConfirm}>
-          </TextInput>
+        <ThemedText type="title">Paso 4: Confirma tu clave</ThemedText>
+        <ThemedText type="subtitle">Hola, {name} Confirma tu contraseña</ThemedText>
+        <TextInput style={styles.stepInput} secureTextEntry={true} placeholder='Confirme su contraseña' onChangeText={setPasswordConfirm}>
+        </TextInput>
       </ThemedView>
 
-      <Button title="Registrarse" onPress={handleRegister} />
+      {/*       <Button title="Registrarse" onPress={handleRegister} />
+ */}
+      <Pressable
+        onPress={handleRegister}
+        style={[styles.roundedButton, styles.blueButton]} // Estilo para el botón azul
+      >
+        <Text style={styles.buttonText}>Registrarse</Text>
+      </Pressable>
 
-     
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  roundedButton: {
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 25, // Esto hace que los bordes sean redondeados
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 20, // Para bajarlo más
+  },
+  blueButton: {
+    backgroundColor: '#1E90FF', // Azul
+  }, buttonText: {
+    color: '#FFFFFF', // Color del texto
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
     padding: 16,
+    backgroundColor: '#000000',  // Color de fondo aquí (puedes cambiar el código hexadecimal)
+    gap: 8,
+  },
+  label: {
+    fontSize: 18,
+    marginBottom: 8,
+  },
+  stepInput: {
+    gap: 8,
+    marginBottom: 2,
+    backgroundColor: '#9C9C9C',  // Color de fondo aquí (puedes cambiar el código hexadecimal)
+    padding: 16,
   },
   stepContainer: {
     gap: 8,
-    marginBottom: 8,
+    marginBottom: 33,
+    marginTop: -300,  // Agregar margen superior para bajarlo
+
   },
   input: {
     borderColor: 'gray',
