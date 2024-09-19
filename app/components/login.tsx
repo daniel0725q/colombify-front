@@ -36,7 +36,6 @@ export default function LoginComponent() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <View>
 
 
         <ThemedView style={styles.titleContainer}>
@@ -91,7 +90,6 @@ export default function LoginComponent() {
             <Text style={styles.buttonText}>¿No tienes cuenta? Regístrate aquí</Text>
           </Pressable>
         </ThemedView>
-      </View>
     </ThemeProvider>
   );
 }
@@ -125,7 +123,7 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     alignItems: 'center',
-    margin: 8,
+    padding: 8,
     
     
   }, 
@@ -138,8 +136,8 @@ const styles = StyleSheet.create({
   },
   stepContainer: {
     gap: 8,
-    marginBottom: 8,
-    marginTop: 90,  // Agregar margen superior para bajarlo
+    paddingBottom: 8,
+    paddingTop: 90,  // Agregar margen superior para bajarlo
     backgroundColor: '#000000',  // Color de fondo aquí (puedes cambiar el código hexadecimal)
 
   },
