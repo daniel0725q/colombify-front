@@ -36,7 +36,7 @@ export default function LoginComponent() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-
+      <View style={styles.mainView}>
 
         <ThemedView style={styles.titleContainer}>
           <ThemedText type="title">Iniciar sesión!</ThemedText>
@@ -90,6 +90,7 @@ export default function LoginComponent() {
             <Text style={styles.buttonText}>¿No tienes cuenta? Regístrate aquí</Text>
           </Pressable>
         </ThemedView>
+        </View>
     </ThemeProvider>
   );
 }
@@ -148,5 +149,9 @@ const styles = StyleSheet.create({
     left: 0,
     position: 'absolute',
     
+  },
+  mainView: {
+    flex: 1,
+    backgroundColor: '#000000'
   },
 });
