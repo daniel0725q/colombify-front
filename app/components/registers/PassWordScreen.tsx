@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Pressable } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
@@ -17,11 +17,31 @@ type RootStackParamList = {
 type NavigationProp = StackNavigationProp<RootStackParamList, 'DuplicatePasswordScreen'>;
 
 export default function PassWordScreen() {
-  const navigation = useNavigation<NavigationProp>();
   const [name, setName] = useState<string | null>('');
-  const [email, setEmail] = useState<string | null>('');
   const [password, setPassword] = useState<string>('');
-  AsyncStorage.getItem("Name").then((value) => { setName(value) })
+  const [isPasswordValid,setPasswordValid] = useState<boolean>(false);
+
+  // Obtener el nombre almacenado en AsyncStorage
+  useEffect(() => {
+    const getName = async () => {
+      const storedName = await AsyncStorage.getItem('Name');
+      if (storedName) {
+        setName(storedName);
+      }
+    };
+    getName();
+  }, []);
+
+  // Función para validar el formato del password
+  const validatePassword = (password: string) => {
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{10,}$/; // Expresión regular corregida
+    return passwordRegex.test(password);
+  };
+
+  // Validar password cada vez que cambia el valor
+  useEffect(() => {
+    setPasswordValid(validatePassword(password));
+  }, [password]);
 
 
   return (
@@ -42,17 +62,17 @@ export default function PassWordScreen() {
 
         }}
       /> */}
-      <Pressable
+       <Pressable
         onPress={async () => {
-          router.navigate("./DuplicatePasswordScreen");
-          await AsyncStorage.setItem("Password", password);
+          await AsyncStorage.setItem('Password', password);
+          router.navigate('./DuplicatePasswordScreen');
         }}
         style={[
           styles.roundedButton,
           styles.blueButton,
-          { opacity: password  ? 1 : 0.5 }  // Cambia la opacidad si no están completos
+          { opacity: isPasswordValid ? 1 : 0.5 }, // Cambia la opacidad según la validez del password
         ]}
-        disabled={!password}  // Deshabilita el botón si alguno está vacío
+        disabled={!isPasswordValid} // Deshabilita si la contraseña no es válida
       >
         <Text style={styles.buttonText}>Siguiente</Text>
       </Pressable>

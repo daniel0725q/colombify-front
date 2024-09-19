@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Pressable } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
@@ -17,11 +17,33 @@ type RootStackParamList = {
 type NavigationProp = StackNavigationProp<RootStackParamList, 'PasswordScreen'>;
 
 
-export default function EmailScreen({ route }: { route: any }) {
+export default function EmailScreen() {
   const [name, setName] = useState<string | null>('');
   const [email, setEmail] = useState<string>('');
-  AsyncStorage.getItem("Name").then((value) => { setName(value) })
+  const [isEmailValid, setIsEmailValid] = useState<boolean>(false);
 
+    // Obtener el nombre almacenado en AsyncStorage
+    useEffect(() => {
+      const getName = async () => {
+        const storedName = await AsyncStorage.getItem('Name');
+        if (storedName) {
+          setName(storedName);
+        }
+      };
+      getName();
+    }, []);
+  
+    // Función para validar el formato del email
+    const validateEmail = (email: string) => {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Expresión regular para validar email
+      return emailRegex.test(email);
+    };
+  
+    // Validar email cada vez que cambia el valor
+    useEffect(() => {
+      setIsEmailValid(validateEmail(email));
+    }, [email]);
+  
   return (
     <View style={styles.container}>
       <ThemedView style={styles.stepContainer}>
@@ -41,15 +63,15 @@ export default function EmailScreen({ route }: { route: any }) {
       /> */}
       <Pressable
         onPress={async () => {
-          router.navigate("./PassWordScreen");
-          await AsyncStorage.setItem("Email", email);
+          await AsyncStorage.setItem('Email', email);
+          router.navigate('./PassWordScreen');
         }}
         style={[
           styles.roundedButton,
           styles.blueButton,
-          { opacity: email  ? 1 : 0.5 }  // Cambia la opacidad si no están completos
+          { opacity: isEmailValid ? 1 : 0.5 }, // Opacidad basada en la validez del email
         ]}
-        disabled={!email}  // Deshabilita el botón si alguno está vacío
+        disabled={!isEmailValid} // Deshabilita si el email no es válido
       >
         <Text style={styles.buttonText}>Siguiente</Text>
       </Pressable>

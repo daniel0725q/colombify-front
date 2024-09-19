@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View,Text, TextInput, Button, StyleSheet, Alert, Pressable } from 'react-native';
+import { View, Text, TextInput, Alert, StyleSheet, Pressable } from 'react-native';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -10,8 +10,7 @@ export default function DuplicatePasswordScreen() {
   const [email, setEmail] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
   const [passwordConfirm, setPasswordConfirm] = useState<string>('');
-
-  AsyncStorage.getItem("Email").then((value) => { setEmail(value) })
+  const [isPasswordMatch, setIsPasswordMatch] = useState<boolean>(false);
 
   // Obtener los valores almacenados en AsyncStorage
   useEffect(() => {
@@ -28,9 +27,17 @@ export default function DuplicatePasswordScreen() {
     fetchData();
   }, []);
 
+  // Verificar si las contraseñas coinciden
+  useEffect(() => {
+    if (password && passwordConfirm) {
+      setIsPasswordMatch(password === passwordConfirm);
+    } else {
+      setIsPasswordMatch(false);
+    }
+  }, [password, passwordConfirm]);
+
   const handleRegister = async () => {
-    // Validar que las contraseñas coincidan
-    if (password !== passwordConfirm) {
+    if (!isPasswordMatch) {
       Alert.alert('Error', 'Las contraseñas no coinciden');
       return;
     }
@@ -64,28 +71,31 @@ export default function DuplicatePasswordScreen() {
     <View style={styles.container}>
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="title">Paso 4: Confirma tu clave</ThemedText>
-        <ThemedText type="subtitle">Hola, {name} Confirma tu contraseña</ThemedText>
-        <TextInput style={styles.stepInput} secureTextEntry={true} placeholder='Confirme su contraseña' onChangeText={setPasswordConfirm}>
-        </TextInput>
+        <ThemedText type="subtitle">Hola, {name}, confirma tu contraseña</ThemedText>
+        <TextInput
+          style={styles.stepInput}
+          secureTextEntry={true}
+          placeholder="Confirme su contraseña"
+          onChangeText={setPasswordConfirm}
+          value={passwordConfirm}
+        />
       </ThemedView>
 
-      {/*       <Button title="Registrarse" onPress={handleRegister} />
- */}
       <Pressable
         onPress={handleRegister}
         style={[
           styles.roundedButton,
           styles.blueButton,
-          { opacity: password  ? 1 : 0.5 }  // Cambia la opacidad si no están completos
+          { opacity: isPasswordMatch ? 1 : 0.5 }, // Cambia la opacidad según si coinciden las contraseñas
         ]}
-        disabled={!password}  // Deshabilita el botón si alguno está vacío
+        disabled={!isPasswordMatch} // Deshabilita si las contraseñas no coinciden
       >
         <Text style={styles.buttonText}>Registrarse</Text>
       </Pressable>
-
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   roundedButton: {
