@@ -40,7 +40,7 @@ export default function LoginComponent() {
 
         <ThemedView style={styles.titleContainer}>
           <ThemedText type="title">Iniciar sesión!</ThemedText>
-          
+          <HelloWave />
         </ThemedView>
 
 
@@ -124,8 +124,7 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     alignItems: 'center',
-    padding: 8,
-    
+    margin: 8,    
     
   }, 
   stepInput: {
@@ -137,8 +136,8 @@ const styles = StyleSheet.create({
   },
   stepContainer: {
     gap: 8,
-    paddingBottom: 8,
-    paddingTop: 90,  // Agregar margen superior para bajarlo
+    marginBottom: 8,
+    marginTop: 90,  // Agregar margen superior para bajarlo
     backgroundColor: '#000000',  // Color de fondo aquí (puedes cambiar el código hexadecimal)
 
   },
@@ -152,6 +151,8 @@ const styles = StyleSheet.create({
   },
   mainView: {
     flex: 1,
-    backgroundColor: '#000000'
+    backgroundColor: '#000000',
+    paddingHorizontal: 24,
+
   },
 });
