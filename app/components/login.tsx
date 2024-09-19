@@ -73,9 +73,16 @@ export default function LoginComponent() {
                 })
                 .catch(err => alert("Error"))
             }}
-            style={[styles.roundedButton, styles.redButton]}
-            ><Text style={styles.buttonText}>Login</Text>
-            </Pressable>
+            style={[
+              styles.roundedButton,
+              styles.redButton,
+              { opacity: email && password ? 1 : 0.5 }  // Cambia la opacidad si no están completos
+            ]}
+            disabled={!email || !password}  // Deshabilita el botón si alguno está vacío
+          >
+            <Text style={styles.buttonText}>Login</Text>
+          </Pressable>
+
           {/*  <Button onPress={() => {
             router.navigate("/components/register")
           }}
@@ -83,14 +90,14 @@ export default function LoginComponent() {
           color={"#1000BF"}
           />
            */}
-         <Pressable
+          <Pressable
             onPress={() => router.navigate("/components/registers/NameScreen")}
             style={[styles.roundedButton, styles.blueButton]} // Estilo para el botón rojo
-            >
+          >
             <Text style={styles.buttonText}>¿No tienes cuenta? Regístrate aquí</Text>
           </Pressable>
         </ThemedView>
-        </View>
+      </View>
     </ThemeProvider>
   );
 }
@@ -124,15 +131,15 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     alignItems: 'center',
-    margin: 8,    
-    
-  }, 
+    margin: 8,
+
+  },
   stepInput: {
     gap: 8,
     marginBottom: 2,
     backgroundColor: '#9C9C9C',  // Color de fondo aquí (puedes cambiar el código hexadecimal)
     padding: 16,
-    
+
   },
   stepContainer: {
     gap: 8,
@@ -147,7 +154,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     position: 'absolute',
-    
+
   },
   mainView: {
     flex: 1,
