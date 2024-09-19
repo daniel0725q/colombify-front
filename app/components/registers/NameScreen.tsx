@@ -38,7 +38,13 @@ export default function NameScreen() {
           router.navigate("./EmailScreen");
           await AsyncStorage.setItem("Name", name);
         }}
-        style={[styles.roundedButton, styles.blueButton]} // Estilo para el botón azul
+        
+        style={[
+          styles.roundedButton,
+          styles.blueButton,
+          { opacity: name  ? 1 : 0.5 }  // Cambia la opacidad si no están completos
+        ]}
+        disabled={!name}  // Deshabilita el botón si alguno está vacío
       >
         <Text style={styles.buttonText}>Siguiente</Text>
       </Pressable>
