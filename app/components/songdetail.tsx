@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet, ActivityIndicator, Button } from 'react-native';
 import { Audio } from 'expo-av';
 import {
-    cacheDirectory,
-    writeAsStringAsync,
-    EncodingType
-  } from 'expo-file-system';
+  cacheDirectory,
+  writeAsStringAsync,
+  EncodingType
+} from 'expo-file-system';
 
 interface Genre {
   id: number;
@@ -81,7 +81,9 @@ const SongDetail = ({ route }: { route: any }) => {
       <Text style={styles.artist}>Artista: {song.artist.stageName}</Text>
       <Text style={styles.bio}>{song.artist.bio}</Text>
       <Button title="Play" onPress={() => playSound(song.audioUrl)} />
-        <Text> </Text>
+      <Text> </Text>
+      <Button title="Pause" color={"orange"} onPress={() => sound?.pauseAsync()} />
+      <Text> </Text>
       <Button title="Stop" color={"red"} onPress={() => sound?.stopAsync()} />
 
     </View>
