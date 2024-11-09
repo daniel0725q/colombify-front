@@ -27,6 +27,7 @@ export default function PassWordScreen() {
       const storedName = await AsyncStorage.getItem('Name');
       if (storedName) {
         setName(storedName);
+        
       }
     };
     getName();
