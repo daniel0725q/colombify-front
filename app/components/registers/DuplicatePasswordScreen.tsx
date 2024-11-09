@@ -44,7 +44,8 @@ export default function DuplicatePasswordScreen() {
 
     // Enviar datos al servidor
     try {
-      const response = await fetch(`http://ec2-54-164-66-106.compute-1.amazonaws.com:8080/signup`, {
+      //const response = await fetch(`http://ec2-54-164-66-106.compute-1.amazonaws.com:8080/signup`, {
+        const response = await fetch(`http://localhost:8080/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
