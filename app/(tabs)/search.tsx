@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet, Text, FlatList } from 'react-native';
+import { View, TextInput, Button, StyleSheet, Text, FlatList, TouchableOpacity  } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router, useNavigation } from 'expo-router';
@@ -9,6 +9,8 @@ const SearchComponent = () => {
   const [searchOption, setSearchOption] = useState('artists');
   const [searchResults, setSearchResults] = useState([]);
   const navigation = useNavigation();
+
+  const genres = ['Pop', 'Hip Hop', 'Latin', 'Rock', 'Jazz']; 
 
   const handleSearchTextChange = (text: string) => {
     setSearchText(text);
@@ -76,6 +78,19 @@ const SearchComponent = () => {
         <Picker.Item label="Canciones" value="songs" />
       </Picker>
       <Button title="Buscar" onPress={handleSearch} />
+
+      <View style={styles.genreButtonContainer}>
+        {genres.map((genre) => (
+          <TouchableOpacity
+            key={genre}
+            style={styles.genreButton}
+            onPress={() => router.push({ pathname: '../components/genrelist', params: { genre } })}
+          >
+            <Text style={styles.genreButtonText}>{genre}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+
       <FlatList
         data={searchResults}
         keyExtractor={(item: any) => item.id}
@@ -114,6 +129,26 @@ const styles = StyleSheet.create({
     height: 50,
     width: '100%',
     marginBottom: 12,
+  },
+  genreButtonContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    marginVertical: 10,
+  },
+  genreButton: {
+    backgroundColor: '#6200ad',
+    padding: 20, 
+    width: 80, 
+    height: 80,
+    margin: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  genreButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   resultItem: {
     padding: 8,
