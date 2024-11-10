@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, TextInput, Button, StyleSheet, Text, FlatList, TouchableOpacity  } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -8,9 +8,10 @@ const SearchComponent = () => {
   const [searchText, setSearchText] = useState('');
   const [searchOption, setSearchOption] = useState('artists');
   const [searchResults, setSearchResults] = useState([]);
+  const [genres, setGenres] = useState<{ id: number; name: string; description: string; colorInHex: string; songs: any[] }[]>([]);
   const navigation = useNavigation();
+  const [showGenres, setShowGenres] = useState(true); // Estado para controlar la visibilidad de los géneros
 
-  const genres = ['Pop', 'Hip Hop', 'Latin', 'Rock', 'Jazz']; 
 
   const handleSearchTextChange = (text: string) => {
     setSearchText(text);
@@ -18,6 +19,26 @@ const SearchComponent = () => {
 
   const handleSearchOptionChange = (itemValue: string) => {
     setSearchOption(itemValue);
+  };
+
+  const fetchGenres = async () => {
+    try {
+      const token = await AsyncStorage.getItem('token');
+      
+      const response = await fetch('http://localhost:8080/genres', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+      const data = await response.json();
+      setGenres(data); // Suponiendo que el backend devuelve un array de géneros
+      console.log('Fetched genres:', data);
+
+    } catch (error) {
+      console.error('Error fetching genres:', error);
+    }
   };
 
   const handleSearch = async () => {
@@ -60,6 +81,9 @@ const SearchComponent = () => {
     });
     }
   };
+ useEffect(() => {
+    fetchGenres();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -81,13 +105,13 @@ const SearchComponent = () => {
 
       <View style={styles.genreButtonContainer}>
         {genres.map((genre) => (
-          <TouchableOpacity
-            key={genre}
-            style={styles.genreButton}
-            onPress={() => router.push({ pathname: '../components/genrelist', params: { genre } })}
-          >
-            <Text style={styles.genreButtonText}>{genre}</Text>
-          </TouchableOpacity>
+         <TouchableOpacity
+         key={genre.id} // Usa el ID único del género como clave
+         style={styles.genreButton}
+         onPress={() => router.push({ pathname: '../components/genrelist', params: { genre: genre.name } })}
+       >
+         <Text style={styles.genreButtonText}>{genre.name}</Text> {/* Muestra el nombre del género */}
+       </TouchableOpacity>
         ))}
       </View>
 
