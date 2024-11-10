@@ -2,6 +2,7 @@ import { router, useLocalSearchParams } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet, FlatList, ActivityIndicator, Touchable } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { ImageBackground } from 'react-native';
 
 interface Genre {
   id: number;
@@ -17,6 +18,8 @@ interface Song {
   artwork: string;
   description: string;
   genre: Genre;
+  artist: Artist;
+
 }
 
 interface Artist {
@@ -63,8 +66,12 @@ onPress={() => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.stageName}>{artist.stageName}</Text>
-      <Text style={styles.bio}>{artist.bio}</Text>
+       <ImageBackground source={{ uri: 'https://via.placeholder.com/500x200' }} style={styles.backgroundImage}>
+        <Text style={styles.stageName}>{artist.stageName}</Text>
+        <Text style={styles.bio}>{artist.bio}</Text>
+      </ImageBackground>
+      <Text style={styles.songTitle}>Canciones</Text>
+
       <FlatList
         data={artist.songs}
         keyExtractor={(item) => item.id.toString()}
@@ -72,13 +79,15 @@ onPress={() => {
             <TouchableOpacity onPress={() => {
                 router.push({ pathname: `../components/songdetail`, params: { songId: item.id } })
             }}>
-              <View style={styles.songContainer}>
-                <Image source={{ uri: item.artwork }} style={styles.artwork} />
-                <View style={styles.songDetails}>
+            <View style={styles.songContainer}>
+             {/* <Image source={{ uri: 'https://via.placeholder.com/50' }} style={styles.artwork} /> */}
+              <Image source={{ uri: item.artwork }} style={styles.artwork} />
+
+              <View style={styles.songDetails}>
                 <Text style={styles.songTitle}>{item.title}</Text>
                 <Text style={styles.songDescription}>{item.description}</Text>
                 <Text style={[styles.genre, { color: item.genre.colorInHex }]}>
-                    {item.genre.name}
+                  {item.genre.name}
                 </Text>
               </View>
             </View>
@@ -91,6 +100,13 @@ onPress={() => {
 
 const styles = StyleSheet.create({
   container: {
+    padding: 16,
+  },
+  backgroundImage: {
+    width: '100%',
+    height: 200,
+    justifyContent: 'center',
+    alignItems: 'center',
     padding: 16,
   },
   stageName: {
