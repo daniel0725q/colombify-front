@@ -10,7 +10,7 @@ const SearchComponent = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [genres, setGenres] = useState<{ id: number; name: string; description: string; colorInHex: string; songs: any[] }[]>([]);
   const navigation = useNavigation();
-  const [showGenres, setShowGenres] = useState(true); // Estado para controlar la visibilidad de los géneros
+  const [showGenres, setShowGenres] = useState(true);   
 
 
   const handleSearchTextChange = (text: string) => {
@@ -42,6 +42,7 @@ const SearchComponent = () => {
   };
 
   const handleSearch = async () => {
+    setShowGenres(false); // Ocultar los botones de géneros al hacer una búsqueda
     let results: any = [];
     if (searchOption === 'artists') {
       // Llamar al endpoint para buscar artistas
@@ -84,6 +85,12 @@ const SearchComponent = () => {
  useEffect(() => {
     fetchGenres();
   }, []);
+  
+  useEffect(() => {
+    if (searchResults.length > 0) {
+      setShowGenres(false); // Ocultar géneros una vez que se tienen resultados
+    }
+  }, [searchResults]);
 
   return (
     <View style={styles.container}>
@@ -103,17 +110,19 @@ const SearchComponent = () => {
       </Picker>
       <Button title="Buscar" onPress={handleSearch} />
 
-      <View style={styles.genreButtonContainer}>
-        {genres.map((genre) => (
-         <TouchableOpacity
-         key={genre.id} // Usa el ID único del género como clave
-         style={styles.genreButton}
-         onPress={() => router.push({ pathname: '../components/genrelist', params: { genre: genre.name } })}
-       >
-         <Text style={styles.genreButtonText}>{genre.name}</Text> {/* Muestra el nombre del género */}
-       </TouchableOpacity>
-        ))}
-      </View>
+      {showGenres && (
+        <View style={styles.genreButtonContainer}>
+          {genres.map((genre) => (
+            <TouchableOpacity
+              key={genre.id}
+              style={styles.genreButton}
+              onPress={() => router.push({ pathname: '../components/genrelist', params: { genre: genre.name } })}
+            >
+              <Text style={styles.genreButtonText}>{genre.name}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      )}
 
       <FlatList
         data={searchResults}
