@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, ActivityIndicator, Image, TouchableOpacity } from 'react-native';
-import { useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface Song {
@@ -33,7 +33,7 @@ const PlaylistDetail = () => {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
-              'Authorization': `Bearer ${await AsyncStorage.getItem('token').then((value) => value)}`,
+              'Authorization': `Bearer ${token}`,
             },
           });
           const data = await response.json();
@@ -73,7 +73,7 @@ const PlaylistDetail = () => {
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <TouchableOpacity
-            onPress={() => console.log('Reproduciendo canción:', item.title)}
+            onPress={() => router.push({ pathname: './songdetail', params: { songId: item.id } })}
           >
             <View style={styles.songContainer}>
               {item.artwork && (

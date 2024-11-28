@@ -59,10 +59,9 @@ const Playlists = () => {
           <TouchableOpacity
             onPress={() => {
               router.push({
-                pathname: '../components/PlaylistDetail',
+                pathname: '../components/playlistdetail',
                 params: {
                   playlistId: item.id,
-                  songs: JSON.stringify(item.songs), // Asegurar que se envía correctamente
                 },
               });
             }}
