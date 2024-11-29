@@ -82,11 +82,11 @@ const SongDetail = ({ route }: { route: any }) => {
       </Text>
       <Text style={styles.artist}>Artista: {song.artist.stageName}</Text>
       <Text style={styles.bio}>{song.artist.bio}</Text>
-      <Button title="Play" onPress={() => playSound(song.audioUrl)} />
+      <Button title="Reproducir" onPress={() => playSound(song.audioUrl)} />
       <Text> </Text>
-      <Button title="Pause" color={"orange"} onPress={() => sound?.pauseAsync()} />
+      <Button title="Pausar" color={"orange"} onPress={() => sound?.pauseAsync()} />
       <Text> </Text>
-      <Button title="Stop" color={"red"} onPress={() => setVisible(true)} />
+      <Button title="Detener" color={"red"} onPress={() => setVisible(true)} />
       <Text> </Text>
       <Button title="Añadir a playlist" color={"green"} onPress={() => setVisible(true)} />
         <PlaylistModal songId={song.id} isVisible={visible} onClose={() => setVisible(false)} />

@@ -63,7 +63,7 @@ const PlaylistModal: React.FC<PlaylistModalProps> = ({ songId, isVisible, onClos
           addSongToPlaylist();
           onClose();
     } else {
-      alert('Please select a playlist');
+      alert('Por favor selecciona una playlist');
     }
   };
 
