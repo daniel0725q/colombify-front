@@ -7,6 +7,7 @@ import {
   writeAsStringAsync,
   EncodingType
 } from 'expo-file-system';
+import PlaylistModal from './playlistpicker';
 
 interface Genre {
   id: number;
@@ -36,6 +37,7 @@ const SongDetail = ({ route }: { route: any }) => {
   const [sound, setSound] = useState<Audio.Sound | null>(null);
   const [song, setSong] = useState<Song | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [visible, setVisible] = useState<boolean>(false);
 
   const playSound = async (audioUrl: string) => {
     if (sound) {
@@ -84,8 +86,10 @@ const SongDetail = ({ route }: { route: any }) => {
       <Text> </Text>
       <Button title="Pause" color={"orange"} onPress={() => sound?.pauseAsync()} />
       <Text> </Text>
-      <Button title="Stop" color={"red"} onPress={() => sound?.stopAsync()} />
-
+      <Button title="Stop" color={"red"} onPress={() => setVisible(true)} />
+      <Text> </Text>
+      <Button title="Añadir a playlist" color={"green"} onPress={() => setVisible(true)} />
+        <PlaylistModal songId={song.id} isVisible={visible} onClose={() => setVisible(false)} />
     </View>
   );
 };
